@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Solicitação de Materiais</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<h1>Sistema de Solicitação de Materiais</h1>
+
+<div class="card">
+  <input id="posicao" placeholder="Posição">
+  <input id="partnumber" placeholder="Partnumber">
+  <button onclick="solicitarMaterial()">Solicitar Material</button>
+</div>
+
+<div class="card">
+  <h3>Solicitações em Andamento</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Posição</th>
+        <th>Partnumber</th>
+        <th>Solicitado em</th>
+        <th>Atraso</th>
+        <th>Status</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody id="lista"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Histórico Completo</h3>
+  <label>Filtrar por data:</label>
+  <input type="date" id="filtroData">
+  <button onclick="filtrarHistorico()">Filtrar</button>
+  <button onclick="exportarExcel()">Exportar para Excel</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Posição</th>
+        <th>Partnumber</th>
+        <th>Solicitado em</th>
+        <th>Abastecido em</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="historico"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Gráficos de Abastecimento</h3>
+  <canvas id="graficoDiario" height="120"></canvas>
+  <canvas id="graficoMensal" height="120"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
