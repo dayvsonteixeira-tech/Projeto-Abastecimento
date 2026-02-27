@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #007bff; /* azul */
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3; /* azul mais escuro ao passar o mouse */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background: #eaeaea;
+}
+
+/* STATUS */
+.pendente {
+  background-color: #ffe5e5;
+  color: #a10000;
+  font-weight: bold;
+}
+
+.finalizado {
+  background-color: #e5ffe5;
+  color: #006b00;
+  font-weight: bold;
+}
