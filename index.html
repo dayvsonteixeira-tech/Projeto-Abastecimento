@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Solicitação de Materiais</title>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; padding: 20px; }
+    h1 { text-align: center; }
+    .card { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+    input, button { padding: 8px; margin: 5px 0; width: 100%; }
+    button { cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+
+<h1>Solicitação de Materiais</h1>
+
+<div class="card">
+  <h3>Nova Solicitação</h3>
+  <input id="posicao" placeholder="Posição" />
+  <input id="partnumber" placeholder="Partnumber" />
+  <button onclick="solicitarMaterial()">Solicitar Material</button>
+</div>
+
+<div class="card">
+  <h3>Solicitações em Aberto</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Posição</th>
+        <th>Partnumber</th>
+        <th>Solicitado em</th>
+        <th>Tempo de Atraso</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody id="lista"></tbody>
+  </table>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgpRxB7gluCbqEnFHIf68xDQVRmAp0dBo",
+    authDomain: "controle-abastecimento-f80ed.firebaseapp.com",
+    projectId: "controle-abastecimento-f80ed",
+    storageBucket: "controle-abastecimento-f80ed.firebasestorage.app",
+    messagingSenderId: "129218813008",
+    appId: "1:129218813008:web:b1f665fbcd9b3a777a0555"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  function solicitarMaterial() {
+    const posicao = document.getElementById('posicao').value;
+    const partnumber = document.getElementById('partnumber').value;
+
+    if (!posicao || !partnumber) {
+      alert('Preencha todos os campos');
+      return;
+    }
+
+    db.collection('solicitacoes').add({
+      posicao,
+      partnumber,
+      solicitadoEm: new Date(),
+      abastecidoEm: null
+    });
+
+    document.getElementById('posicao').value = '';
+    document.getElementById('partnumber').value = '';
+  }
+
+  function formatarTempo(ms) {
+    const totalSeg = Math.floor(ms / 1000);
+    const min = Math.floor(totalSeg / 60);
+    const seg = totalSeg % 60;
+    return `${min}m ${seg}s`;
+  }
+
+  function carregarSolicitacoes() {
+    db.collection('solicitacoes').orderBy('solicitadoEm', 'desc')
+      .onSnapshot(snapshot => {
+        const tbody = document.getElementById('lista');
+        tbody.innerHTML = '';
+
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          if (d.abastecidoEm) return;
+
+          const agora = new Date();
+          const atraso = agora - d.solicitadoEm.toDate();
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${d.posicao}</td>
+            <td>${d.partnumber}</td>
+            <td>${d.solicitadoEm.toDate().toLocaleString()}</td>
+            <td>${formatarTempo(atraso)}</td>
+            <td><button onclick="confirmar('${doc.id}')">Abastecido</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  }
+
+  function confirmar(id) {
+    db.collection('solicitacoes').doc(id).update({
+      abastecidoEm: new Date()
+    });
+  }
+
+  carregarSolicitacoes();
+</script>
+
+</body>
+</html>
