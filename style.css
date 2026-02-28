@@ -1,0 +1,189 @@
+/* ===============================
+   RESET E BASE
+================================ */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #eef2f7, #d9e4f5);
+  color: #333;
+}
+
+/* ===============================
+   TÍTULO PRINCIPAL
+================================ */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f3c88;
+}
+
+/* ===============================
+   CARDS
+================================ */
+.card {
+  background: #ffffff;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ===============================
+   INPUTS
+================================ */
+input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #cfd8dc;
+  outline: none;
+  transition: border 0.2s;
+}
+
+input:focus {
+  border-color: #1f3c88;
+}
+
+/* ===============================
+   BOTÕES
+================================ */
+button {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1f3c88, #3f72af);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* ===============================
+   TABELAS
+================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+th {
+  background: #1f3c88;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+/* ===============================
+   STATUS
+================================ */
+.pendente {
+  background: #ffe5e5;
+  color: #a10000;
+  font-weight: bold;
+}
+
+.finalizado {
+  background: #e6fffa;
+  color: #00695c;
+  font-weight: bold;
+}
+
+/* ===============================
+   DESTAQUE PARA ATRASO
+================================ */
+td[data-solicitado] {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* ===============================
+   MOBILE FIRST
+================================ */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 22px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  /* Oculta coluna "Solicitado em" no celular */
+  table th:nth-child(3),
+  table td:nth-child(3) {
+    display: none;
+  }
+
+}
+
+/* ===============================
+   DASHBOARD EXECUTIVO
+================================ */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.kpi {
+  background: white;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.kpi-title {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1f3c88;
+}
+
+.kpi.red .kpi-value {
+  color: #c62828;
+}
+
+.kpi.green .kpi-value {
+  color: #2e7d32;
+}
+
+.kpi.blue .kpi-value {
+  color: #1565c0;
+}
