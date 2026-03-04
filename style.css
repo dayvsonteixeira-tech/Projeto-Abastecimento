@@ -1,0 +1,213 @@
+/* ===============================
+   RESET BÁSICO
+================================ */
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  background: #f4f6f8;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* ===============================
+   DASHBOARD
+================================ */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpi {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.kpi-title {
+  font-size: 13px;
+  color: #666;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.kpi.red { background: #ffeaea; color: #b30000; }
+.kpi.green { background: #eaffea; color: #0a7a0a; }
+.kpi.blue { background: #eaf2ff; color: #0047b3; }
+
+/* ===============================
+   CARDS
+================================ */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+/* ===============================
+   FORMULÁRIO
+================================ */
+.card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.card button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: #0066ff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #004fcc;
+}
+
+/* ===============================
+   TABELAS (PC)
+================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+tr.pendente {
+  background: #fff5f5;
+}
+
+tr.finalizado {
+  background: #f1fff1;
+}
+
+/* ===============================
+   INPUT COMENTÁRIO
+================================ */
+.input-comentario {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 6px;
+}
+
+/* ===============================
+   MOBILE FIRST
+================================ */
+@media (max-width: 768px) {
+
+  /* DASHBOARD */
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* TABELA VIRA CARDS */
+  table {
+    border: none;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table,
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    display: block;
+    background: #ffffff;
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    border-left: 6px solid transparent;
+  }
+
+  tr.pendente {
+    border-left-color: #e74c3c;
+    background: #fff8f8;
+  }
+
+  tr.finalizado {
+    border-left-color: #2ecc71;
+    background: #f6fff8;
+  }
+
+  td {
+    display: block;
+    width: 100%;
+    padding: 6px 0;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2e86de;
+    margin-bottom: 3px;
+  }
+
+  /* INPUT COMENTÁRIO */
+  .input-comentario {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  /* BOTÃO ABASTECIDO */
+  td button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #27ae60;
+    color: #fff;
+  }
+}
