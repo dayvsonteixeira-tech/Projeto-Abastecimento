@@ -1,0 +1,182 @@
+/* ===============================
+   RESET / BASE
+================================ */
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  background: #f2f4f8;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ===============================
+   DASHBOARD
+================================ */
+.dashboard {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.kpi {
+  background: #fff;
+  padding: 15px 25px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.kpi.red {
+  border-left: 6px solid #e74c3c;
+}
+
+.kpi-title {
+  display: block;
+  font-size: 14px;
+  color: #777;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+/* ===============================
+   CARDS
+================================ */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+/* ===============================
+   INPUTS / BOTÕES
+================================ */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2e86de;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ===============================
+   TABELA (DESKTOP)
+================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #2e86de;
+  color: #fff;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8f8f8;
+}
+
+/* ===============================
+   MOBILE PREMIUM
+================================ */
+@media (max-width: 768px) {
+
+  table, thead, tbody, th, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    background: #fff;
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border: none;
+    font-size: 14px;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+  }
+
+  /* STATUS */
+  tr.pendente {
+    border-left: 6px solid #e74c3c;
+  }
+
+  tr.finalizado {
+    border-left: 6px solid #27ae60;
+  }
+
+  /* BOTÃO ABASTECIDO */
+  td button {
+    width: 100%;
+    margin-top: 8px;
+    background: #27ae60;
+  }
+
+  /* INPUT COMENTÁRIO */
+  td input {
+    width: 100%;
+    margin-top: 6px;
+  }
+}
+
+/* ===============================
+   HISTÓRICO
+================================ */
+.finalizado {
+  background: #ecfdf3;
+}
