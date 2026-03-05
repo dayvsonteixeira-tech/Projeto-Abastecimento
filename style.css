@@ -1,0 +1,274 @@
+/* ============================= */
+/* RESET */
+/* ============================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family: "Segoe UI", Roboto, Arial, sans-serif;
+background:#f1f5f9;
+padding:35px;
+color:#1e293b;
+}
+
+/* ============================= */
+/* TÍTULO */
+/* ============================= */
+
+h1{
+text-align:center;
+font-size:32px;
+font-weight:600;
+margin-bottom:35px;
+color:#0f172a;
+letter-spacing:0.5px;
+}
+
+/* ============================= */
+/* DASHBOARD */
+/* ============================= */
+
+.dashboard{
+display:flex;
+gap:25px;
+margin-bottom:30px;
+flex-wrap:wrap;
+}
+
+.kpi{
+background:white;
+padding:25px 40px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.06);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+min-width:200px;
+transition:0.2s;
+}
+
+.kpi:hover{
+transform:translateY(-3px);
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+}
+
+.kpi.red{
+border-left:6px solid #ef4444;
+}
+
+.kpi-title{
+font-size:13px;
+color:#64748b;
+margin-bottom:8px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.kpi-value{
+font-size:36px;
+font-weight:700;
+color:#ef4444;
+}
+
+/* ============================= */
+/* CARDS */
+/* ============================= */
+
+.card{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+margin-bottom:30px;
+}
+
+.card h3{
+margin-bottom:20px;
+font-size:20px;
+font-weight:600;
+color:#0f172a;
+}
+
+/* ============================= */
+/* INPUTS */
+/* ============================= */
+
+input, select{
+width:100%;
+padding:12px 14px;
+border-radius:8px;
+border:1px solid #e2e8f0;
+margin-bottom:12px;
+font-size:14px;
+background:#f8fafc;
+transition:0.2s;
+}
+
+input:focus, select:focus{
+outline:none;
+border-color:#3b82f6;
+background:white;
+box-shadow:0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* ============================= */
+/* BOTÕES */
+/* ============================= */
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:11px 16px;
+border-radius:8px;
+font-size:14px;
+font-weight:500;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#1d4ed8;
+transform:translateY(-1px);
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ============================= */
+/* TABELA */
+/* ============================= */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+thead{
+background:#0f172a;
+color:white;
+}
+
+th{
+padding:14px;
+text-align:left;
+font-size:13px;
+font-weight:500;
+letter-spacing:0.5px;
+}
+
+td{
+padding:14px;
+font-size:14px;
+border-bottom:1px solid #e5e7eb;
+color:#334155;
+}
+
+tbody tr:hover{
+background:#f8fafc;
+}
+
+/* ============================= */
+/* LINHAS PENDENTES */
+/* ============================= */
+
+.pendente{
+background:#fff1f2;
+}
+
+/* ============================= */
+/* FILTRO */
+/* ============================= */
+
+.filtro{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+.filtro input{
+max-width:200px;
+}
+
+/* ============================= */
+/* GRÁFICO */
+/* ============================= */
+
+canvas{
+width:100% !important;
+max-height:380px;
+}
+
+/* ============================= */
+/* RESPONSIVO TABLET */
+/* ============================= */
+
+@media(max-width:900px){
+
+body{
+padding:25px;
+}
+
+.dashboard{
+flex-direction:column;
+}
+
+}
+
+/* ============================= */
+/* RESPONSIVO CELULAR */
+/* ============================= */
+
+@media(max-width:600px){
+
+body{
+padding:15px;
+}
+
+h1{
+font-size:22px;
+}
+
+table, thead, tbody, th, td, tr{
+display:block;
+width:100%;
+}
+
+thead{
+display:none;
+}
+
+tr{
+background:white;
+border-radius:10px;
+margin-bottom:14px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+padding:12px;
+}
+
+td{
+border:none;
+display:flex;
+justify-content:space-between;
+padding:7px 0;
+font-size:13px;
+}
+
+td::before{
+content:attr(data-label);
+font-weight:600;
+color:#475569;
+}
+
+button{
+width:100%;
+margin-top:8px;
+}
+
+}
