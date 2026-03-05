@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Solicitação de Materiais</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<h1>Sistema de Solicitação de Materiais</h1>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+<div class="kpi red">
+<span class="kpi-title">Pendentes</span>
+<span class="kpi-value" id="kpiPendentes">0</span>
+</div>
+</div>
+
+<!-- NOVA SOLICITAÇÃO -->
+<div class="card">
+
+<h3>Nova Solicitação</h3>
+
+<div class="select-group">
+<label>Doca</label>
+
+<select id="doca" class="select-premium">
+<option value="">Selecione a Doca</option>
+<option>30</option>
+<option>1B</option>
+<option>1T</option>
+<option>1C</option>
+<option>1K</option>
+<option>1G</option>
+</select>
+</div>
+
+<div class="select-group">
+<label>Solicitante</label>
+
+<select id="solicitante" class="select-premium">
+<option value="">Selecione o Solicitante</option>
+<option>André Silva</option>
+<option>Carlos Renan</option>
+<option>Edson Francisco</option>
+<option>Edwilson Almeida</option>
+<option>Fabiano Almeida</option>
+<option>José Júnior</option>
+<option>Lidiane Almeida</option>
+<option>Roger Alfredo</option>
+<option>Wagner Prado</option>
+<option>Willian Baceti</option>
+</select>
+</div>
+
+<input id="posicao" placeholder="Posição">
+<input id="partnumber" placeholder="Partnumber">
+<input id="quantidade" type="number" placeholder="Quantidade">
+<input id="usoCarro" placeholder="Uso por Carro">
+
+<button onclick="solicitarMaterial()">Solicitar Material</button>
+
+</div>
+
+
+<!-- SOLICITAÇÕES EM ANDAMENTO -->
+<div class="card">
+
+<h3>Solicitações em Andamento</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Doca</th>
+<th>Solicitante</th>
+<th>Posição</th>
+<th>Partnumber</th>
+<th>Qtd</th>
+<th>Uso por Carro</th>
+<th>Solicitado</th>
+<th>Atraso</th>
+<th>Comentário</th>
+<th>Ação</th>
+</tr>
+</thead>
+
+<tbody id="lista"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- HISTÓRICO -->
+<div class="card">
+
+<h3>Histórico de Abastecimento</h3>
+
+<div class="filtro">
+
+<input type="date" id="filtroData">
+
+<button onclick="filtrarPorData()">Filtrar</button>
+
+<button onclick="exportarExcel()">Exportar Excel</button>
+
+</div>
+
+<table>
+
+<tbody id="historico"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- GRÁFICO -->
+<div class="card">
+
+<h3>Gráfico de Abastecimentos</h3>
+
+<canvas id="graficoDiario" height="120"></canvas>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
