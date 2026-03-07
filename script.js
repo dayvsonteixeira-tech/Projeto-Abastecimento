@@ -1,0 +1,314 @@
+firebase.initializeApp({
+apiKey:"AIzaSyDgpRxB7gluCbqEnFHIf68xDQVRmAp0dBo",
+authDomain:"controle-abastecimento-f80ed.firebaseapp.com",
+projectId:"controle-abastecimento-f80ed"
+})
+
+const db=firebase.firestore()
+
+const docaEl=document.getElementById("doca")
+const solicitanteEl=document.getElementById("solicitante")
+const posicaoEl=document.getElementById("posicao")
+const partnumberEl=document.getElementById("partnumber")
+const quantidadeEl=document.getElementById("quantidade")
+const usoCarroEl=document.getElementById("usoCarro")
+
+const lista=document.getElementById("lista")
+const historico=document.getElementById("historico")
+
+let grafico=null
+let primeiraCarga=true
+
+/* PLUGIN PARA MOSTRAR VALOR EM CIMA DAS BARRAS */
+
+Chart.register({
+id:'valoresTopo',
+afterDatasetsDraw(chart){
+
+const {ctx}=chart
+
+chart.data.datasets.forEach((dataset,i)=>{
+
+const meta=chart.getDatasetMeta(i)
+
+meta.data.forEach((bar,index)=>{
+
+const valor=dataset.data[index]
+
+ctx.fillStyle="#000"
+ctx.font="bold 12px Arial"
+ctx.textAlign="center"
+
+ctx.fillText(valor,bar.x,bar.y-5)
+
+})
+
+})
+
+}
+})
+
+function solicitarMaterial(){
+
+const doca=docaEl.value
+const solicitante=solicitanteEl.value
+const posicao=posicaoEl.value.trim()
+const partnumber=partnumberEl.value.trim()
+const quantidade=Number(quantidadeEl.value)
+const usoCarro=usoCarroEl.value.trim()
+
+if(!doca||!solicitante||!posicao||!partnumber||!quantidade||!usoCarro){
+alert("Preencha todos os campos")
+return
+}
+
+db.collection("solicitacoes").add({
+doca,
+solicitante,
+posicao,
+partnumber,
+quantidade,
+usoCarro,
+solicitadoEm:new Date(),
+status:"PENDENTE"
+})
+
+posicaoEl.value=""
+partnumberEl.value=""
+quantidadeEl.value=""
+usoCarroEl.value=""
+
+}
+
+db.collection("solicitacoes")
+.orderBy("solicitadoEm","asc")
+.onSnapshot(snapshot=>{
+
+if(!primeiraCarga){
+tocarAlerta()
+mostrarAlertaVisual()
+}
+
+primeiraCarga=false
+
+lista.innerHTML=""
+let total=0
+let dadosGrafico={}
+
+snapshot.forEach(doc=>{
+
+const d=doc.data()
+
+if(d.status==="PENDENTE"){
+
+total++
+
+const s=d.solicitadoEm.toDate()
+
+lista.innerHTML+=`
+
+<tr class="pendente">
+
+<td data-label="Doca">${d.doca}</td>
+<td data-label="Solicitante">${d.solicitante}</td>
+<td data-label="Posição">${d.posicao}</td>
+<td data-label="Partnumber">${d.partnumber}</td>
+<td data-label="Qtd">${d.quantidade}</td>
+<td data-label="Uso por Carro">${d.usoCarro}</td>
+<td data-label="Solicitado">${s.toLocaleString()}</td>
+<td data-label="Atraso" data-solicitado="${s.toISOString()}"></td>
+
+<td data-label="Comentário">
+<input id="c-${doc.id}" placeholder="Comentário">
+</td>
+
+<td data-label="Ação">
+<button class="abastecido" onclick="confirmar('${doc.id}')">Abaster</button>
+</td>
+
+</tr>
+
+`
+}
+
+if(d.status==="FINALIZADO"){
+
+const data=d.abastecidoEm?.toDate()
+
+if(data){
+
+const dia=data.toLocaleDateString()
+
+dadosGrafico[dia]=(dadosGrafico[dia]||0)+1
+
+}
+
+}
+
+})
+
+document.getElementById("kpiPendentes").innerText=total
+
+atualizarGrafico(dadosGrafico)
+
+atualizarAtrasos()
+
+})
+
+function confirmar(id){
+
+const comentario=document.getElementById(`c-${id}`).value||""
+
+db.collection("solicitacoes").doc(id).update({
+status:"FINALIZADO",
+comentario,
+abastecidoEm:new Date()
+})
+
+}
+
+function formatarTempo(ms){
+
+const totalMin=Math.floor(ms/60000)
+const horas=Math.floor(totalMin/60)
+const minutos=totalMin%60
+
+return horas+"h "+minutos+"m"
+
+}
+
+function atualizarAtrasos(){
+
+document.querySelectorAll("[data-solicitado]").forEach(el=>{
+
+const inicio=new Date(el.dataset.solicitado)
+const diff=new Date()-inicio
+
+el.innerText=formatarTempo(diff)
+
+})
+
+}
+
+setInterval(atualizarAtrasos,60000)
+
+function tocarAlerta(){
+
+const audio=document.getElementById("alertaSom")
+
+audio.play().catch(()=>{})
+
+}
+
+function mostrarAlertaVisual(){
+
+const alerta=document.getElementById("alertaVisual")
+
+alerta.style.display="block"
+
+setTimeout(()=>{
+alerta.style.display="none"
+},5000)
+
+}
+
+function filtrarPorData(){
+
+const data=document.getElementById("filtroData").value
+
+if(!data)return
+
+const inicio=new Date(data+"T00:00:00")
+const fim=new Date(data+"T23:59:59")
+
+historico.innerHTML=""
+
+db.collection("solicitacoes")
+.where("status","==","FINALIZADO")
+.get()
+.then(snapshot=>{
+
+snapshot.forEach(doc=>{
+
+const d=doc.data()
+
+if(!d.abastecidoEm)return
+
+const ab=d.abastecidoEm.toDate()
+
+if(ab>=inicio && ab<=fim){
+
+historico.innerHTML+=`
+
+<tr>
+
+<td>${d.doca}</td>
+<td>${d.solicitante}</td>
+<td>${d.posicao}</td>
+<td>${d.partnumber}</td>
+<td>${d.quantidade}</td>
+<td>${d.usoCarro}</td>
+<td>${d.solicitadoEm.toDate().toLocaleString()}</td>
+<td>${ab.toLocaleString()}</td>
+<td>${d.comentario||"-"}</td>
+
+</tr>
+
+`
+
+}
+
+})
+
+})
+
+}
+
+function exportarExcel(){
+
+let tabela=document.getElementById("tabelaHistorico")
+let html=tabela.outerHTML
+
+let url='data:application/vnd.ms-excel,'+encodeURIComponent(html)
+
+let link=document.createElement("a")
+link.href=url
+link.download="historico.xls"
+link.click()
+
+}
+
+function atualizarGrafico(dados){
+
+const ctx=document.getElementById("graficoDiario").getContext("2d")
+
+if(grafico)grafico.destroy()
+
+grafico=new Chart(ctx,{
+type:"bar",
+data:{
+labels:Object.keys(dados),
+datasets:[{
+label:"Abastecimentos",
+data:Object.values(dados),
+backgroundColor:"#16a34a"
+}]
+},
+options:{
+responsive:true,
+plugins:{
+legend:{display:false}
+},
+scales:{
+y:{
+beginAtZero:true,
+ticks:{
+stepSize:1,
+precision:0
+}
+}
+}
+}
+})
+
+}
