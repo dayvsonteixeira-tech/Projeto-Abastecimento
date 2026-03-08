@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupplyControl | Gestão de Abastecimento</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="logo">
+        <span class="icon">📦</span>
+        <h1>Supply<span>Control</span></h1>
+    </div>
+    <div id="liveAlert" class="badge-alert hidden">NOVA SOLICITAÇÃO</div>
+</header>
+
+<main class="container">
+    <section class="stats-grid">
+        <article class="stat-card urgent">
+            <p class="label">Pendentes</p>
+            <h2 id="kpiPendentes">0</h2>
+            <p class="trend">Aguardando ação</p>
+        </article>
+        </section>
+
+    <section class="card">
+        <header class="card-header">
+            <h3>Registrar Material</h3>
+        </header>
+        <form id="formAbastecimento" class="form-grid">
+            <div class="input-group">
+                <label>Doca</label>
+                <select id="doca" required>
+                    <option value="">Selecione...</option>
+                    <option>30</option><option>1B</option><option>1T</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Solicitante</label>
+                <select id="solicitante" required>
+                    <option value="">Selecione...</option>
+                    <option>André Silva</option><option>Carlos Renan</option>
+                </select>
+            </div>
+            <input type="text" id="posicao" placeholder="Posição (Ex: A-102)" required>
+            <input type="text" id="partnumber" placeholder="Partnumber" required>
+            <input type="number" id="quantidade" placeholder="Qtd" required min="1">
+            <input type="text" id="usoCarro" placeholder="Uso por Carro" required>
+            <button type="submit" class="btn-primary">Enviar Pedido</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="card-header flex-between">
+            <h3>Solicitações em Andamento</h3>
+            <span class="status-indicator">Tempo Real</span>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Local</th>
+                        <th>Solicitante</th>
+                        <th>Material</th>
+                        <th>Qtd</th>
+                        <th>Status / Tempo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="listaPendentes">
+                    </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<audio id="alertaSom" src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3"></audio>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
